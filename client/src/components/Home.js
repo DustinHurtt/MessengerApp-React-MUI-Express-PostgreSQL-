@@ -5,7 +5,7 @@ import { Grid, CssBaseline, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { SidebarContainer } from "../components/Sidebar";
-import { ActiveChat } from "../components/ActiveChat";
+import { ActiveChat, Messages } from "../components/ActiveChat";
 import { SocketContext } from "../context/socket";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +50,9 @@ const Home = ({ user, logout }) => {
   };
 
   const saveMessage = async (body) => {
+
     const { data } = await axios.post("/api/messages", body);
+
     return data;
   };
 
@@ -62,16 +64,14 @@ const Home = ({ user, logout }) => {
     });
   };
 
-  const postMessage = (body) => {
+  const postMessage = async (body) => {
     try {
-      const data = saveMessage(body);
-
+      const data = await saveMessage(body);
       if (!body.conversationId) {
         addNewConvo(body.recipientId, data.message);
       } else {
         addMessageToConversation(data);
       }
-
       sendMessage(data, body);
     } catch (error) {
       console.error(error);
@@ -80,17 +80,19 @@ const Home = ({ user, logout }) => {
 
   const addNewConvo = useCallback(
     (recipientId, message) => {
-      conversations.forEach((convo) => {
+        setConversations(previousState => previousState.map(convo => {
         if (convo.otherUser.id === recipientId) {
-          convo.messages.push(message);
-          convo.latestMessageText = message.text;
-          convo.id = message.conversationId;
+            convo.messages.push(message)
+            convo.latestMessageText = message.text;
+            convo.id = message.conversationId;
+            return convo
         }
-      });
-      setConversations(conversations);
+        return convo
+      }))
     },
-    [setConversations, conversations]
+    [setConversations],
   );
+
   const addMessageToConversation = useCallback(
     (data) => {
       // if sender isn't null, that means the message needs to be put in a brand new convo
@@ -102,19 +104,25 @@ const Home = ({ user, logout }) => {
           messages: [message],
         };
         newConvo.latestMessageText = message.text;
+
         setConversations((prev) => [newConvo, ...prev]);
       }
 
       conversations.forEach((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.push(message);
-          convo.latestMessageText = message.text;
+          const newChat = { ...convo };
+          newChat.messages.unshift(message);
+          newChat.latestMessageText = message.text;
+          return newChat;
+        } else {
+          return convo;
         }
       });
-      setConversations(conversations);
+      setConversations([...conversations]);
     },
     [setConversations, conversations]
   );
+
 
   const setActiveChat = (username) => {
     setActiveConversation(username);
@@ -183,6 +191,7 @@ const Home = ({ user, logout }) => {
       try {
         const { data } = await axios.get("/api/conversations");
         setConversations(data);
+
       } catch (error) {
         console.error(error);
       }
