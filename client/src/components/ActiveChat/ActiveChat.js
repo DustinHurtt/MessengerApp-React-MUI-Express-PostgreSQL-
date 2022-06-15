@@ -57,7 +57,6 @@ const ActiveChat = ({
                   otherUser={conversation.otherUser}
                   conversationId={conversation.id || null}
                   user={user}
-                  // value={}
                   postMessage={postMessage}
                 />
               </>
