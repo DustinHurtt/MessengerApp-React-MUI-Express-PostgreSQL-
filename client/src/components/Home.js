@@ -90,7 +90,6 @@ const Home = ({ user, logout }) => {
         } else {
           return convo
         }
-        // return convoCopy
       }))
     },
     [],

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Route, Switch, withRouter } from "react-router-dom";
-
-import Signup from "./Signup.js";
-import Login from "./Login.js";
 import { SnackbarError, Home } from "./components";
 import { SocketContext, socket } from "./context/socket";
+import Landing from "./components/Landing.js";
 
 const Routes = (props) => {
   const [user, setUser] = useState({
@@ -98,21 +96,13 @@ const Routes = (props) => {
       )}
       <Switch>
         <Route
-          path="/login"
-          render={() => <Login user={user} login={login} />}
-        />
-        <Route
-          path="/register"
-          render={() => <Signup user={user} register={register} />}
-        />
-        <Route
           exact
           path="/"
           render={(props) =>
             user?.id ? (
               <Home user={user} logout={logout} />
             ) : (
-              <Signup user={user} register={register} />
+              <Landing user={user} register={register} login={login} />
             )
           }
         />
