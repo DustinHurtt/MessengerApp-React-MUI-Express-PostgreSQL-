@@ -10,6 +10,10 @@ import {
   FormControl,
   InputAdornment,
 } from "@mui/material/";
+import Toggle from "./Toggle";
+import EntryButton from "./EntryButton";
+import Greeting from "./Greeting";
+import Username from "./Username";
 
 const Login = ({ login, user, changeEntry }) => {
   const history = useHistory();
@@ -41,68 +45,15 @@ const Login = ({ login, user, changeEntry }) => {
         <Grid
           sx={{
             width: "100%",
-
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              height: "6.5%",
-            }}
-          >
-            <Box
-              sx={{
-                width: "63%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                marginTop: "4%",
-                marginRight: "2%",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  fontSize: "14px",
-                  lineHeight: "19px",
-                  textAlign: "center",
-                  color: "#B0B0B0",
-                }}
-              >
-                Don't have an account?
-              </Typography>
-              <Button
-                onClick={changeEntry}
-                variant="contained"
-                color="primary"
-                sx={{
-                  color: "#3A8DFF",
-                  backgroundColor: "white",
-                  textTransform: "none",
-                  height: "100%",
-                  width: "45%",
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  lineHeight: "19px",
-                  textAlign: "center",
-                }}
-              >
-                Create Account
-              </Button>
-            </Box>
-          </Grid>
-
+          <Toggle
+            changeEntry={changeEntry}
+            question="Don't have an account?"
+            buttonText="Create Account"
+          />
           <Grid
             container
             item
@@ -129,49 +80,9 @@ const Login = ({ login, user, changeEntry }) => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "26px",
-                  lineHeight: "40px",
-                }}
-              >
-                Welcome Back!
-              </Typography>
-
+              <Greeting welcome="Welcome Back!" />
               <Grid item sx={{ width: "100%" }}>
-                <FormControl margin="normal" required sx={{ width: "100%" }}>
-                  <Typography
-                    sx={{
-                      color: "#B0B0B0",
-                      fontFamily: "Open Sans",
-                      fontStyle: "normal",
-                      fontWeight: "400",
-                      fontSize: "14px",
-                      lineHeight: "19px",
-                    }}
-                  >
-                    Username
-                  </Typography>
-                  <TextField
-                    aria-label="username"
-                    name="username"
-                    type="text"
-                    variant="standard"
-                    sx={{
-                      input: {
-                        fontFamily: "Open Sans",
-                        fontStyle: "normal",
-                        fontWeight: "600",
-                        fontSize: "14px",
-                        lineHeight: "19px",
-                      },
-                    }}
-                  />
-                </FormControl>
-
+                <Username />
                 <FormControl margin="normal" required sx={{ width: "100%" }}>
                   <Typography
                     sx={{
@@ -227,37 +138,7 @@ const Login = ({ login, user, changeEntry }) => {
                     }}
                   />
                 </FormControl>
-                <Grid
-                  item
-                  sx={{
-                    width: "100%",
-                    height: "20%",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "5%",
-                  }}
-                >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      marginTop: "5%",
-                      width: "40%",
-                      height: "125%",
-                      textTransform: "none",
-                      backgroundColor: "#3A8DFF",
-                      fontFamily: "Open Sans",
-                      fontStyle: "normal",
-                      fontWeight: "700",
-                      fontSize: "16px",
-                      lineHeight: "24px",
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    Login
-                  </Button>
-                </Grid>
+                <EntryButton buttonText="Login" />
               </Grid>
             </Box>
           </Grid>
