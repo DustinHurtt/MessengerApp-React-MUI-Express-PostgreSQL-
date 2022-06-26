@@ -6,9 +6,12 @@ const EntryButton = (props) => {
   return (
     <Grid
     item
+    // height={{sx: "16%", sm: "16%"}}
     sx={{
       width: "100%",
-      height: "20%",
+      // height: "16%",
+      height: "18%",
+      // height: "20%",
       display: "flex",
       justifyContent: "center",
       marginTop: "5%",
