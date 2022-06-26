@@ -145,7 +145,7 @@ const Signup = ({ user, register, changeEntry }) => {
                   />
                   <FormHelperText></FormHelperText>
                 </FormControl>
-                <EntryButton buttonText="Create" />
+                <EntryButton buttonText="Create"/>
               </Grid>
             </Box>
           </Grid>
