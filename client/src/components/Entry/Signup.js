@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Button,
   TextField,
   Box,
   Grid,
@@ -10,6 +9,10 @@ import {
   FormControl,
   FormHelperText,
 } from "@mui/material/";
+import Toggle from "./Toggle";
+import Greeting from "./Greeting";
+import Username from "./Username";
+import EntryButton from "./EntryButton";
 
 const Signup = ({ user, register, changeEntry }) => {
   const history = useHistory();
@@ -46,63 +49,11 @@ const Signup = ({ user, register, changeEntry }) => {
             flexDirection: "column",
           }}
         >
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              height: "6.5%",
-            }}
-          >
-            <Box
-              sx={{
-                width: "63%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                marginTop: "4%",
-                marginRight: "2%",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  fontSize: "14px",
-                  lineHeight: "19px",
-                  textAlign: "center",
-                  color: "#B0B0B0",
-                }}
-              >
-                Already have an account?
-              </Typography>
-              <Button
-                onClick={changeEntry}
-                variant="contained"
-                color="primary"
-                sx={{
-                  color: "#3A8DFF",
-                  backgroundColor: "white",
-                  textTransform: "none",
-                  height: "100%",
-                  width: "30%",
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  lineHeight: "19px",
-                  textAlign: "center",
-                }}
-              >
-                Login
-              </Button>
-            </Box>
-          </Grid>
-
+          <Toggle
+            changeEntry={changeEntry}
+            question="Already have an account?"
+            buttonText="Login"
+          />
           <Grid
             container
             item
@@ -129,49 +80,9 @@ const Signup = ({ user, register, changeEntry }) => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "Open Sans",
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  fontSize: "26px",
-                  lineHeight: "40px",
-                }}
-              >
-                Create an Account.
-              </Typography>
-
+              <Greeting welcome="Create an Account." />
               <Grid item sx={{ width: "100%" }}>
-                <FormControl margin="normal" required sx={{ width: "100%" }}>
-                  <Typography
-                    sx={{
-                      color: "#B0B0B0",
-                      fontFamily: "Open Sans",
-                      fontStyle: "normal",
-                      fontWeight: "400",
-                      fontSize: "14px",
-                      lineHeight: "19px",
-                    }}
-                  >
-                    Username
-                  </Typography>
-                  <TextField
-                    aria-label="username"
-                    name="username"
-                    type="text"
-                    variant="standard"
-                    sx={{
-                      input: {
-                        fontFamily: "Open Sans",
-                        fontStyle: "normal",
-                        fontWeight: "600",
-                        fontSize: "14px",
-                        lineHeight: "19px",
-                      },
-                    }}
-                  />
-                </FormControl>
-
+                <Username />
                 <FormControl margin="normal" required sx={{ width: "100%" }}>
                   <Typography
                     sx={{
@@ -202,7 +113,6 @@ const Signup = ({ user, register, changeEntry }) => {
                     }}
                   />
                 </FormControl>
-
                 <FormControl margin="normal" required sx={{ width: "100%" }}>
                   <Typography
                     sx={{
@@ -235,37 +145,7 @@ const Signup = ({ user, register, changeEntry }) => {
                   />
                   <FormHelperText></FormHelperText>
                 </FormControl>
-                <Grid
-                  item
-                  sx={{
-                    width: "100%",
-                    height: "20%",
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "5%",
-                  }}
-                >
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      marginTop: "5%",
-                      width: "40%",
-                      height: "93%",
-                      textTransform: "none",
-                      backgroundColor: "#3A8DFF",
-                      fontFamily: "Open Sans",
-                      fontStyle: "normal",
-                      fontWeight: "700",
-                      fontSize: "16px",
-                      lineHeight: "24px",
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    Create
-                  </Button>
-                </Grid>
+                <EntryButton buttonText="Create" />
               </Grid>
             </Box>
           </Grid>
