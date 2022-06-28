@@ -50,7 +50,6 @@ const Home = ({ user, logout }) => {
   };
 
   const saveMessage = async (body) => {
-
     const { data } = await axios.post("/api/messages", body);
 
     return data;
@@ -61,12 +60,14 @@ const Home = ({ user, logout }) => {
       message: data.message,
       recipientId: body.recipientId,
       sender: data.sender,
+      attachments: data.attachments,
     });
   };
 
   const postMessage = async (body) => {
     try {
       const data = await saveMessage(body);
+
       if (!body.conversationId) {
         addNewConvo(body.recipientId, data.message);
       } else {
@@ -78,41 +79,38 @@ const Home = ({ user, logout }) => {
     }
   };
 
-  const addNewConvo = useCallback(
-    (recipientId, message) => {
-        setConversations(previousState => previousState.map(convo => {
+  const addNewConvo = useCallback((recipientId, message) => {
+    setConversations((previousState) =>
+      previousState.map((convo) => {
         if (convo.otherUser.id === recipientId) {
-            const convoCopy = {...convo}
-            convoCopy.messages.push(message)
-            convoCopy.latestMessageText = message.text;
-            convoCopy.id = message.conversationId;
-            return convoCopy
+          const convoCopy = { ...convo };
+          convoCopy.messages.push(message);
+          convoCopy.latestMessageText = message.text;
+          convoCopy.id = message.conversationId;
+          return convoCopy;
         } else {
-          return convo
+          return convo;
         }
-      }))
-    },
-    [],
-  );
-  
-  const addMessageToConversation = useCallback(
-    (data) => {
-      let newMessage = data.message
-        setConversations(previousState => previousState.map(convo => {
-          if (convo.id === newMessage.conversationId){
-            const newChat = { ...convo }
-            newChat.messages.push(newMessage)
-            newChat.latestMessageText = newMessage.text
-            newChat.id = newMessage.conversationId
-            return newChat;
-           } else {
-            return convo
-           }
-        }))
-      },
-    [],
-  );
+      })
+    );
+  }, []);
 
+  const addMessageToConversation = useCallback((data) => {
+    let newMessage = data.message;
+    setConversations((previousState) =>
+      previousState.map((convo) => {
+        if (convo.id === newMessage.conversationId) {
+          const newChat = { ...convo };
+          newChat.messages.push(newMessage);
+          newChat.latestMessageText = newMessage.text;
+          newChat.id = newMessage.conversationId;
+          return newChat;
+        } else {
+          return convo;
+        }
+      })
+    );
+  }, []);
 
   const setActiveChat = (username) => {
     setActiveConversation(username);
@@ -180,9 +178,11 @@ const Home = ({ user, logout }) => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get("/api/conversations");
-        let reversed = data.map(convo => ({...convo, messages: convo.messages.reverse()}));
+        let reversed = data.map((convo) => ({
+          ...convo,
+          messages: convo.messages.reverse(),
+        }));
         setConversations(reversed);
-
       } catch (error) {
         console.error(error);
       }
