@@ -1,10 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Avatar } from "@material-ui/core";
+import { Box, Avatar } from "@material-ui/core";
+import MessageBubble from "./MessageBubble";
 
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
   },
   avatar: {
     height: 30,
@@ -12,26 +16,9 @@ const useStyles = makeStyles(() => ({
     marginRight: 11,
     marginTop: 6,
   },
-  usernameDate: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  bubble: {
-    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 10px 10px 10px",
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    letterSpacing: -0.2,
-    padding: 8,
-  },
 }));
 
-const OtherUserBubble = ({ text, time, otherUser }) => {
+const OtherUserBubble = ({ text, time, otherUser, images }) => {
   const classes = useStyles();
 
   return (
@@ -41,14 +28,16 @@ const OtherUserBubble = ({ text, time, otherUser }) => {
         src={otherUser.photoUrl}
         className={classes.avatar}
       />
-      <Box>
-        <Typography className={classes.usernameDate}>
-          {otherUser.username} {time}
-        </Typography>
-        <Box className={classes.bubble}>
-          <Typography className={classes.text}>{text}</Typography>
-        </Box>
-      </Box>
+
+      <MessageBubble
+        text={text}
+        time={time}
+        images={images}
+        alignItems="flex-start"
+        backgroundImage="linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)"
+        borderRadius="0 10px 10px 10px"
+        color="#FFFFFF"
+      />
     </Box>
   );
 };
